@@ -1,4 +1,9 @@
+using Api.ViewModel;
+using AutoMapper;
+using Base.Domain.Entities;
 using Infra.Context;
+using Infra.Interfaces;
+using Infra.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,6 +14,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Services.DTO;
+using Services.Intefaces;
+using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +38,22 @@ namespace Api
         {
 
             services.AddControllers();
+
+            #region AutoMapper
+            var autoMapperConfig = new MapperConfiguration(x =>
+            {
+                x.CreateMap<User, UserDTO>().ReverseMap();
+                x.CreateMap<UserDTO, CreateUserViewModel>().ReverseMap();
+            });
+
+            services.AddSingleton(autoMapperConfig.CreateMapper());
+            #endregion
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserServices, UserService>();
+
             services.AddDbContext<SqlContext>(opc => opc.UseSqlServer(Configuration.GetConnectionString("Conexao")));
+          
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });

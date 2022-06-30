@@ -1,4 +1,6 @@
-﻿using Api.ViewModel;
+﻿using Api.Util;
+using Api.ViewModel;
+using AutoMapper;
 using Core.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +18,12 @@ namespace Api.Controllers
     public class UserController : ControllerBase
     {
         private IUserServices services;
+        private IMapper mapper;
 
-        public UserController(IUserServices services)
+        public UserController(IUserServices services, IMapper mapper)
         {
             this.services = services;
+            this.mapper = mapper;
         }
 
 
@@ -29,17 +33,24 @@ namespace Api.Controllers
         {
             try
             {
-               var create = await services.CreateAsync(userCreate);
-                return Create(create);
+                var userDTO = mapper.Map<UserDTO>(userCreate);
+
+               var create = await services.CreateAsync(userDTO);
+
+                return Ok(new ResultViewModel 
+                {
+                    Message = "Usuário criado com sucesso",
+                    Data = userCreate 
+                });
             }
             catch (DomainExceptions ex)
             {
 
-                return BadRequest();
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Erros));
             }
             catch(Exception)
             {
-                return StatusCode(500, "Erro");
+                return StatusCode(500, Responses.ApplicationErrorMessage());
             }
         }
 
