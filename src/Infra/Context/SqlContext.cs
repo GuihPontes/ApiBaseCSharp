@@ -1,4 +1,5 @@
 ﻿using Base.Domain.Entities;
+using Infra.Mapping;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace Infra.Context
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new UserMap());
 
         }
     }
