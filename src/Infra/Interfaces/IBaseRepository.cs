@@ -12,7 +12,7 @@ namespace Infra.Interfaces
         Task<T> CreateAsync(T obj);
         Task<T> UpdateAsync(T obj);
         Task Remove(long id);
-        Task<List<T>> GetAllAsync();
+        Task<ICollection<T>> GetAllAsync();
         Task<T> GetAsync(long id);
     }
 }

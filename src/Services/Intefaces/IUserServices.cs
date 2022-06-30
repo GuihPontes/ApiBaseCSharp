@@ -12,7 +12,7 @@ namespace Services.Intefaces
         Task<UserDTO> CreateAsync(UserDTO userDTO);
         Task<UserDTO> UpdateAsync(UserDTO userDTO);
         Task Remove(long id);
-        Task<List<UserDTO>> GetAllAsync();
+        Task<ICollection<UserDTO>> GetAllAsync();
         Task<UserDTO> GetAsync(long id);
         Task<UserDTO> GetByEmail(string email);
         Task<ICollection<UserDTO>> SerchByEmail(string email);

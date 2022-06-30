@@ -26,7 +26,7 @@ namespace Infra.Repository
             return obj;
         }
 
-        public virtual async Task<List<T>> GetAllAsync()
+        public virtual async Task<ICollection<T>> GetAllAsync()
         {
             return await context.Set<T>()
                                         .AsNoTracking()
