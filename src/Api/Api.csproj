@@ -14,11 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Folder Include="Configuracao\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Infra\Infra.csproj" />
+    <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
 </Project>
