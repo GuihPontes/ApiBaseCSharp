@@ -32,7 +32,7 @@ namespace Base.Domain.Validators
                 .WithMessage("O nome não pode ser nula")
 
 
-                .MaximumLength(3)
+                .MinimumLength(3)
                 .WithMessage("O nome deve ter no mínimo 3 caracters")
 
                 .MaximumLength(80)
@@ -53,7 +53,7 @@ namespace Base.Domain.Validators
                 .EmailAddress()
                 .WithMessage("Email inválido")
 
-                 .MaximumLength(10)
+                 .MinimumLength(10)
                 .WithMessage("O Email deve ter no mínimo 10 caracters")
 
                 .MaximumLength(180)

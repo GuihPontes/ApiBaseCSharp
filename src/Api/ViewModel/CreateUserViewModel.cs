@@ -25,6 +25,7 @@ namespace Api.ViewModel
         [Required(ErrorMessage ="A senha é obrigatoria")]
         [MaxLength(30, ErrorMessage = "A senha deve ter no mínimo 30 caracters")]
         [MinLength(6, ErrorMessage = " A senha deve ter no mínimo 6 caracters")]
+        
         public string Password { get; set; }
 
     }
