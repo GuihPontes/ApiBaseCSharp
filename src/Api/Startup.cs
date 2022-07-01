@@ -83,14 +83,50 @@ namespace Api
             services.AddScoped<IUserServices, UserService>();
 
             services.AddDbContext<SqlContext>(opc => opc.UseSqlServer(Configuration.GetConnectionString("Conexao")));
-          
+
+            #region Swagger 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Manager API",
+                    Version = "v1",
+                    Description = "API Base .",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Guilherme Pontes",
+                        Email = "guilherme-pontes2015@hotmail.com",
+                        Url = new Uri("https://www.linkedin.com/in/guilherme-pontes")
+                    },
+                });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Por favor utilize Bearer <TOKEN>",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] { }
+                }
+                });
             });
+            #endregion
+
+
         }
 
-        
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
